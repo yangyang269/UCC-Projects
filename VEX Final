@@ -1,0 +1,39 @@
+const int trigPin = 9;
+const int echoPin = 10;
+const int ledPin = 13;
+const int touchPin = 11;
+int distance = 0;
+const int motorPin = 6;
+
+void setup() 
+{
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+  pinMode(touchPin, INPUT);
+  pinMode(motorPin, OUTPUT);
+}
+
+void loop() 
+{
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  distance = pulseIn(echoPin, HIGH) / 58;
+
+  if (distance <= 10 || digitalRead(touchPin) == HIGH) 
+  {
+    digitalWrite(motorPin, HIGH);
+    digitalWrite(ledPin, HIGH);
+    delay(5000);
+  }
+  else 
+  {
+  	 digitalWrite(motorPin, LOW);
+    digitalWrite(ledPin, LOW);
+    delay(10);
+  }
+}
