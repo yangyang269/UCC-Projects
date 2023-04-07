@@ -1,0 +1,33 @@
+#include <Servo.h>
+
+Servo myservo;
+int leftMotorPin = 9;
+int ledPin = 13;
+int touchPin = 2;
+Servo leftMotor;
+
+// This is the SETUP function - all Arduino programs will have ONE Setup function
+void setup() {
+  pinMode(leftMotorPin, OUTPUT);
+  pinMode(ledPin, OUTPUT);
+  leftMotor.attach(leftMotorPin); // attaches servo to pin 9
+
+  pinMode(touchPin, INPUT);
+}
+
+// This is the LOOP function - all Arduino programs will have ONE Loop function
+void loop() {
+
+  leftMotorControl(80);
+
+  if (digitalRead(touchPin) == HIGH) {
+    digitalWrite(ledPin, HIGH); // Turn on LED
+  } else {
+    digitalWrite(ledPin, LOW); // Turn off LED
+  }
+
+}
+
+int leftMotorControl(int value) {
+  leftMotor.write(map(value, 0, 100, 1000, 2000));
+}
