@@ -6,28 +6,36 @@ int ledPin = 13;
 int touchPin = 2;
 Servo leftMotor;
 
-// This is the SETUP function - all Arduino programs will have ONE Setup function
+// This is the SETUP function - all Arduino programs have ONE Setup function
+// In the setup function, we declare whether or not we use each pin for an ouput or input. The difference between outputs and inputs is quite simple.
+// If we set something as an input, that means were are getting data from it and using it for something else. This could be a ultrasonic or touch sensor.
+// If we set something as an output, that means it will do something as a result of the data we are getting. For example this could be a motor.
+// We can also use the setup function to attach motors or sensors if necessary
 void setup() {
-  pinMode(leftMotorPin, OUTPUT);
-  pinMode(ledPin, OUTPUT);
-  leftMotor.attach(leftMotorPin); // attaches servo to pin 9
+  pinMode(leftMotorPin, OUTPUT); //This line sets leftMotorPin to Output
+  pinMode(ledPin, OUTPUT); // This sets the ledPin to Output
+  leftMotor.attach(leftMotorPin); // This attaches the VEX motor to pin 9
 
-  pinMode(touchPin, INPUT);
+  pinMode(touchPin, INPUT); //This sets the touch sensor as an input. It needs to be an input because we are receiving data from it. 
 }
 
-// This is the LOOP function - all Arduino programs will have ONE Loop function
+// This is the LOOP function - all Arduino programs have ONE Loop function
+
 void loop() {
 
-  leftMotorControl(80);
+  leftMotorControl(80); // This sets the power of the VEX motor
 
-  if (digitalRead(touchPin) == HIGH) {
-    digitalWrite(ledPin, HIGH); // Turn on LED
-  } else {
+  if (digitalRead(touchPin) == HIGH) { // This line is basically saying that if the touch sensor detects itself being pressed, it will turn on the LED. 
+    digitalWrite(ledPin, HIGH); // Turns on the LED 
+  } else { // Else if it does not detect anything, the LED will not turn on.
     digitalWrite(ledPin, LOW); // Turn off LED
   }
 
 }
 
-int leftMotorControl(int value) {
+//This lines of code basically make the motor function.
+// According to the YouTube video I watched, he explained it as the map command allows the motor to get an input value of 0-100 instead of from 
+// 1000-2000 which would be the input for other servo motors. Video: https://www.youtube.com/watch?v=N2LpwizZARw&t=625s&ab_channel=EvanWeinberg
+int leftMotorControl(int value) { 
   leftMotor.write(map(value, 0, 100, 1000, 2000));
 }
